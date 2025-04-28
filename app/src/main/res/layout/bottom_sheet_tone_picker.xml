@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:gravity="center"
+    android:background="@android:color/white"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <Button
+        android:id="@+id/btn_friendly"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="😊 Friendly"
+        android:layout_marginBottom="16dp"/>
+
+    <Button
+        android:id="@+id/btn_formal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="🏛️ Formal"
+        android:layout_marginBottom="16dp"/>
+
+    <Button
+        android:id="@+id/btn_funny"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="😂 Funny"
+        android:layout_marginBottom="16dp"/>
+
+    <Button
+        android:id="@+id/btn_other"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="✏️ Other" />
+
+</LinearLayout>

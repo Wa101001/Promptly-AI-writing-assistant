@@ -1,47 +1,49 @@
 package com.example.promptly
 
 import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.example.promptly.ui.theme.PromptlyTheme
+import androidx.appcompat.app.AppCompatActivity
+import android.view.ActionMode
+import android.view.Menu
+import android.view.MenuItem
+import android.widget.TextView
 
-class MainActivity : ComponentActivity() {
+class MainActivity : AppCompatActivity() {
+
+    private lateinit var textView: TextView  // Just for demo text
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContent {
-            PromptlyTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
+        setContentView(R.layout.activity_main)
+
+        textView = findViewById(R.id.textView)
+
+        textView.customSelectionActionModeCallback = object : ActionMode.Callback {
+            override fun onCreateActionMode(mode: ActionMode, menu: Menu): Boolean {
+                menu.add("✏️ Promptly").setOnMenuItemClickListener {
+                    val start = textView.selectionStart
+                    val end = textView.selectionEnd
+                    val selectedText = textView.text.substring(start, end)
+
+                    val bottomSheet = PromptlyToneBottomSheet(selectedText) { instruction ->
+                        // 👇 Call GPT with selected text and instruction here later
+                        GptHelper.callGpt(selectedText, instruction) { result ->
+                            if (result != null) {
+                                runOnUiThread {
+                                    textView.text = textView.text.replaceRange(start, end, result)
+                                }
+                            }
+                        }
+                    }
+
+                    bottomSheet.show(supportFragmentManager, "PromptlyBottomSheet")
+                    true
                 }
+                return true
             }
+
+            override fun onPrepareActionMode(mode: ActionMode, menu: Menu) = false
+            override fun onActionItemClicked(mode: ActionMode, item: MenuItem) = false
+            override fun onDestroyActionMode(mode: ActionMode) {}
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    PromptlyTheme {
-        Greeting("Android")
     }
 }

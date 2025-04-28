@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="24dp"
+    android:background="#f7f7f7">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Select any part of this text and Promptly will help you improve it!"
+        android:textSize="18sp"
+        android:textColor="#333333"
+        android:padding="16dp"
+        android:background="@android:color/white"
+        android:gravity="center"
+        android:layout_centerInParent="true"
+        android:textIsSelectable="true" />
+
+</RelativeLayout>
